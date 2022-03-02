@@ -1,6 +1,7 @@
 import { FlatList, TouchableOpacity, Text, View, Image } from "react-native";
 import tw from "tailwind-react-native-classnames";
 import { Icon } from "react-native-elements";
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
 
 const data = [
@@ -19,6 +20,8 @@ const data = [
 ];
 
 const NavOptions = () => {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       data={data}
@@ -26,7 +29,13 @@ const NavOptions = () => {
       horizontal
       //arrow function that returns a component, and everytime we loop through we get a destructured item(the individual item we're looping through).
       renderItem={({ item }) => (
-        <TouchableOpacity style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2`}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate(item.screen);
+          }}
+          style={tw`p-2 pl-6 pb-8 pt-4 bg-gray-200 m-2`}
+          title="go to second screen"
+        >
           <View>
             <Image
               style={{ width: 120, height: 120, resizeMode: "contain" }}
