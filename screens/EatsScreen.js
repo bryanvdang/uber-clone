@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, SafeAreaView } from "react-native";
 import React from "react";
 
 const EatsScreen = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>EatsScreen</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
