@@ -16,7 +16,7 @@ export const navSlice = createSlice({
   initialState,
   //when pushing data to the data layer, it is called dispatching. Our 3 actions will be set origin, set destination, and set travelTimeInformation.
   //when you say your origin is chandler, the set origin will know 'Chandler' as the value and will push that to the data layer.
-  reducer: {
+  reducers: {
     setOrigin: (state, action) => {
       state.origin = action.payload;
     }, //action is the communication/action between the component and the data layer. 'state.origin is being passsed to the data layer.
