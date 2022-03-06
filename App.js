@@ -6,11 +6,11 @@ import HomeScreen from "./screens/HomeScreen";
 import EatsScreen from "./screens/EatsScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 import MapScreen from "./screens/MapScreen";
 
 export default function App() {
-  const RootStack = createNativeStackNavigator();
+  const RootStack = createStackNavigator();
 
   return (
     <Provider store={store}>
