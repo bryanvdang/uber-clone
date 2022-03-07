@@ -6,7 +6,6 @@ import { GOOGLE_MAPS_APIKEY } from "@env";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/core";
-import RideOptionsCard from "./RideOptionsCard";
 
 const NavigateCard = () => {
   const dispatch = useDispatch();
