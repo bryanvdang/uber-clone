@@ -11,6 +11,8 @@ import tw from "tailwind-react-native-classnames";
 import React, { useState } from "react";
 import { Icon } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
+import { selectTravelTimeInformation } from "../slices/navSlice";
+import { useSelector } from "react-redux";
 
 const data = [
   {
@@ -36,6 +38,7 @@ const data = [
 const RideOptionsCard = () => {
   const navigation = useNavigation();
   const [selected, setSelected] = useState(null);
+  const travelTimeInformation = useSelector(selectTravelTimeInformation);
 
   return (
     <SafeAreaView style={tw`bg-white flex-grow`}>
@@ -46,7 +49,9 @@ const RideOptionsCard = () => {
         >
           <Icon name="chevron-left" type="fontawesome" />
         </TouchableOpacity>
-        <Text style={tw`text-center pt-5 text-xl`}>Select a Ride</Text>
+        <Text style={tw`text-center pt-5 text-xl`}>
+          Select a Ride - {travelTimeInformation?.distance.text}
+        </Text>
       </View>
       <FlatList
         data={data}
@@ -64,7 +69,7 @@ const RideOptionsCard = () => {
             />
             <View style={tw`-ml-6`}>
               <Text style={tw`text-xl font-semibold`}>{title}</Text>
-              <Text>Travel Time...</Text>
+              <Text>{travelTimeInformation?.duration.text} travel time</Text>
             </View>
             <Text style={tw`text-xl`}>$99</Text>
           </TouchableOpacity>
@@ -73,7 +78,7 @@ const RideOptionsCard = () => {
       <View>
         <TouchableOpacity
           disabled={!selected}
-          style={tw`bg-black m-3 py-2 ${!selected && "bg-gray-300"}`}
+          style={tw`bg-black m-3 py-2 -mb-2 ${!selected && "bg-gray-300"}`}
         >
           <Text style={tw`text-center text-white text-lg`}>
             Choose {selected?.title}

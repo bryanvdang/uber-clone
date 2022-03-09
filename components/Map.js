@@ -2,8 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import tw from "tailwind-react-native-classnames";
 import React, { useEffect, useRef } from "react";
-import { selectOrigin, selectDestination } from "../slices/navSlice";
-import { useSelector } from "react-redux";
+import {
+  selectOrigin,
+  selectDestination,
+  setTravelTimeInformation,
+} from "../slices/navSlice";
+import { useSelector, useDispatch } from "react-redux";
 import MapViewDirections from "react-native-maps-directions";
 import { GOOGLE_MAPS_APIKEY } from "@env";
 
@@ -11,6 +15,7 @@ const Map = () => {
   const origin = useSelector(selectOrigin);
   const destination = useSelector(selectDestination);
   const mapRef = useRef(null);
+  const dispatch = useDispatch();
 
   //gets used when the component rerenders
   useEffect(() => {
@@ -21,6 +26,31 @@ const Map = () => {
       edgePadding: { top: 50, right: 50, bottom: 50, left: 50 },
     });
   }, [origin, destination]); //rerun when the origin or destination changes
+
+  //responsible for calculating the travel time
+  useEffect(() => {
+    if (!origin || !destination) return; //if no origin or destination
+
+    const getTravelTime = async () => {
+      fetch(
+        `https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=${origin.description}&destinations=${destination.description}&key=${GOOGLE_MAPS_APIKEY}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          dispatch(setTravelTimeInformation(data.rows[0].elements[0]));
+        })
+        .catch(function (error) {
+          console.log(
+            "There has been a problem with your fetch operation: " +
+              error.message
+          );
+          // ADD THIS THROW error
+          throw error;
+        });
+    };
+
+    getTravelTime();
+  }, [origin, destination, GOOGLE_MAPS_APIKEY]);
 
   return (
     <MapView
