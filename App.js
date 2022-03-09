@@ -26,7 +26,7 @@ export default function App() {
                 <RootStack.Screen
                   name="Home"
                   component={HomeScreen}
-                  options={{ title: "Overview" }}
+                  options={{ headerShown: false }}
                 />
                 <RootStack.Screen
                   name="MapScreen"
